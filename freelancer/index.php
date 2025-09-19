@@ -63,6 +63,26 @@ if ($userObj->isAdmin()) {
                     <input type="number" class="form-control" name="max_price" required>
                   </div>
                   <div class="form-group">
+                    <label>Category</label>
+                    <select name="category_id" class="form-control" required>
+                      <option value="">Select category</option>
+                      <?php foreach ($categoryObj->getCategories() as $cat) { ?>
+                        <option value="<?php echo $cat['category_id']; ?>"><?php echo htmlspecialchars($cat['name']); ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Subcategory</label>
+                    <select name="subcategory_id" class="form-control" required>
+                      <option value="">Select subcategory (choose category first)</option>
+                      <?php foreach ($categoryObj->getCategories() as $cat) { 
+                        $subs = $categoryObj->getSubcategoriesByCategory($cat['category_id']);
+                        foreach ($subs as $sub) { ?>
+                          <option value="<?php echo $sub['subcategory_id']; ?>">[<?php echo htmlspecialchars($cat['name']); ?>] <?php echo htmlspecialchars($sub['name']); ?></option>
+                      <?php } } ?>
+                    </select>
+                  </div>
+                  <div class="form-group">
                     <label for="exampleInputEmail1">Image</label>
                     <input type="file" class="form-control" name="image" required>
                     <input type="submit" class="btn btn-primary float-right mt-4" name="insertNewProposalBtn">
