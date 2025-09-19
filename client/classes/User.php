@@ -59,7 +59,7 @@ class User extends Database {
      * @return bool True on success, false on failure.
      */
     public function loginUser($email, $password) {
-        $sql = "SELECT user_id, username, password, is_client FROM fiverr_clone_users WHERE email = ?";
+        $sql = "SELECT user_id, username, password, is_client, is_fiverr_admin FROM fiverr_clone_users WHERE email = ?";
         $user = $this->executeQuerySingle($sql, [$email]);
 
         if ($user && password_verify($password, $user['password'])) {
@@ -67,6 +67,7 @@ class User extends Database {
             $_SESSION['user_id'] = $user['user_id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['is_client'] = (bool)$user['is_client'];
+            $_SESSION['is_fiverr_admin'] = isset($user['is_fiverr_admin']) ? (bool)$user['is_fiverr_admin'] : false;
             return true;
         }
         return false;
@@ -87,7 +88,9 @@ class User extends Database {
      */
     public function isAdmin() {
         $this->startSession();
-        return isset($_SESSION['is_client']) && $_SESSION['is_client'];
+        $isClient = isset($_SESSION['is_client']) && $_SESSION['is_client'];
+        $isFiverrAdmin = isset($_SESSION['is_fiverr_admin']) && $_SESSION['is_fiverr_admin'];
+        return $isClient || $isFiverrAdmin;
     }
 
     /**

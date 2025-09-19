@@ -88,6 +88,8 @@ if (isset($_POST['insertNewProposalBtn'])) {
 	$description = htmlspecialchars($_POST['description']);
 	$min_price = htmlspecialchars($_POST['min_price']);
 	$max_price = htmlspecialchars($_POST['max_price']);
+	$category_id = isset($_POST['category_id']) ? (int)$_POST['category_id'] : null;
+	$subcategory_id = isset($_POST['subcategory_id']) ? (int)$_POST['subcategory_id'] : null;
 
 	// Get file name
 	$fileName = $_FILES['image']['name'];
@@ -109,7 +111,7 @@ if (isset($_POST['insertNewProposalBtn'])) {
 
 	// Move file to the specified path 
 	if (move_uploaded_file($tempFileName, $folder)) {
-		if ($proposalObj->createProposal($user_id, $description, $imageName, $min_price, $max_price)) {
+		if ($proposalObj->createProposal($user_id, $description, $imageName, $min_price, $max_price, $category_id, $subcategory_id)) {
 			$_SESSION['status'] = "200";
 			$_SESSION['message'] = "Proposal saved successfully!";
 			header("Location: ../index.php");

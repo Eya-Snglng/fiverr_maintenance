@@ -5,6 +5,7 @@ require_once '../classloader.php';
 $userObj = new User();
 $offerObj = new Offer();
 $db = new Database(); // ✅ Added to run manual queries safely
+$categoryObj = new Category();
 
 if (isset($_POST['insertNewUserBtn'])) {
     $username = htmlspecialchars(trim($_POST['username']));
@@ -115,4 +116,37 @@ if (isset($_POST['deleteOfferBtn'])) {
         header("Location: ../index.php");
         exit;
     }
+}
+
+// Fiverr Administrator: Category Management
+if (isset($_POST['createCategoryBtn'])) {
+    if (!empty($_POST['name'])) {
+        $categoryObj->createCategory(trim($_POST['name']));
+    }
+    header("Location: ../manage_categories.php");
+    exit;
+}
+
+if (isset($_POST['createSubcategoryBtn'])) {
+    if (!empty($_POST['name']) && !empty($_POST['category_id'])) {
+        $categoryObj->createSubcategory((int)$_POST['category_id'], trim($_POST['name']));
+    }
+    header("Location: ../manage_categories.php");
+    exit;
+}
+
+if (isset($_POST['deleteCategoryBtn'])) {
+    if (!empty($_POST['category_id'])) {
+        $categoryObj->deleteCategory((int)$_POST['category_id']);
+    }
+    header("Location: ../manage_categories.php");
+    exit;
+}
+
+if (isset($_POST['deleteSubcategoryBtn'])) {
+    if (!empty($_POST['subcategory_id'])) {
+        $categoryObj->deleteSubcategory((int)$_POST['subcategory_id']);
+    }
+    header("Location: ../manage_categories.php");
+    exit;
 }
