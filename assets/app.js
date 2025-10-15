@@ -21,22 +21,28 @@ async function submitOrder(e) {
   output.className = 'output';
 
   try {
-    const res = await fetch('/api/purchase.php', {
+    const res = await fetch('api/purchase.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ item: itemKey, cash, quantity })
     });
-    const data = await res.json();
+    const text = await res.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch (_) {
+      throw new Error(`Server returned non-JSON (${res.status}): ${text?.slice(0, 140)}`);
+    }
 
-    if (data.success) {
+    if (res.ok && data.success) {
       output.innerHTML = `✅ Success! Total: ${formatMoney(data.total)} | Change: ${formatMoney(data.change)}`;
       output.classList.add('success');
     } else {
-      output.textContent = `❌ ${data.error || 'Transaction failed.'}`;
+      output.textContent = `❌ ${data.error || `HTTP ${res.status}`}`;
       output.classList.add('error');
     }
   } catch (err) {
-    output.textContent = '❌ Network or server error.';
+    output.textContent = `❌ ${err?.message || 'Network or server error.'}`;
     output.classList.add('error');
   }
 }
