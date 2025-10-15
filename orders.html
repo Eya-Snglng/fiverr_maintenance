@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Snack Shop - Orders</title>
+  <link rel="stylesheet" href="/assets/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Snack Shop</h1>
+    <div class="grid">
+      <!-- PeeWee Sizzling BBQ -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1374&auto=format&fit=crop" alt="PeeWee Sizzling BBQ" />
+        <div class="card-body">
+          <div class="card-title">PeeWee Sizzling BBQ</div>
+          <div class="price">$1.50 each</div>
+          <form class="order-form" data-item="peewee-sizzling-bbq">
+            <div>
+              <label for="cash-peewee">Cash</label>
+              <input id="cash-peewee" name="cash" type="number" min="0" step="0.01" placeholder="e.g. 5.00" required />
+            </div>
+            <div>
+              <label for="qty-peewee">Quantity</label>
+              <input id="qty-peewee" name="quantity" type="number" min="1" step="1" placeholder="e.g. 2" required />
+            </div>
+            <button type="submit">Buy PeeWee</button>
+            <div class="output" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Ri-Chee Crunchy Snack -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1505575972945-290b9f592b51?q=80&w=1374&auto=format&fit=crop" alt="Ri-Chee Crunchy Snack" />
+        <div class="card-body">
+          <div class="card-title">Ri-Chee Crunchy Snack</div>
+          <div class="price">$0.95 each</div>
+          <form class="order-form" data-item="ri-chee-crunchy-snack">
+            <div>
+              <label for="cash-richee">Cash</label>
+              <input id="cash-richee" name="cash" type="number" min="0" step="0.01" placeholder="e.g. 5.00" required />
+            </div>
+            <div>
+              <label for="qty-richee">Quantity</label>
+              <input id="qty-richee" name="quantity" type="number" min="1" step="1" placeholder="e.g. 2" required />
+            </div>
+            <button type="submit">Buy Ri-Chee</button>
+            <div class="output" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Viva Caramel Candy -->
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?q=80&w=1374&auto=format&fit=crop" alt="Viva Caramel Candy" />
+        <div class="card-body">
+          <div class="card-title">Viva Caramel Candy</div>
+          <div class="price">$0.60 each</div>
+          <form class="order-form" data-item="viva-caramel-candy">
+            <div>
+              <label for="cash-viva">Cash</label>
+              <input id="cash-viva" name="cash" type="number" min="0" step="0.01" placeholder="e.g. 5.00" required />
+            </div>
+            <div>
+              <label for="qty-viva">Quantity</label>
+              <input id="qty-viva" name="quantity" type="number" min="1" step="1" placeholder="e.g. 2" required />
+            </div>
+            <button type="submit">Buy Viva</button>
+            <div class="output" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>
