@@ -1,33 +1,13 @@
-CREATE TABLE fiverr_clone_users (
-    user_id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password TEXT,
-    is_client BOOLEAN,
-    bio_description TEXT,
-    display_picture TEXT,
-    contact_number VARCHAR(255),
-    date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+-- MySQL schema for users table
 
-CREATE TABLE proposals (
-    proposal_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    description TEXT,
-    image TEXT,
-    min_price INT,
-    max_price INT,
-    view_count INT DEFAULT 0,
-    date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES fiverr_clone_users(user_id)
-);
-
-CREATE TABLE offers (
-    offer_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT,
-    description TEXT,
-    proposal_id INT,
-    date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES fiverr_clone_users(user_id),
-    FOREIGN KEY (proposal_id) REFERENCES proposals(proposal_id)
-);
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) NOT NULL,
+  `firstname` VARCHAR(100) NOT NULL,
+  `lastname` VARCHAR(100) NOT NULL,
+  `is_admin` TINYINT(1) NOT NULL DEFAULT 0,
+  `password` VARCHAR(255) NOT NULL,
+  `date_added` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
