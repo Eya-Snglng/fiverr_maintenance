@@ -63,17 +63,13 @@ try {
             if (fetch_user_by_username($pdo, $username)) {
                 json_response(['ok' => false, 'error' => 'USERNAME_TAKEN'], 409);
             }
-            // If no users exist yet, auto-promote the first registered user to admin
-            $countStmt = $pdo->query('SELECT COUNT(*) AS c FROM users');
-            $countRow = $countStmt->fetch();
-            $noUsersExist = ((int)($countRow['c'] ?? 0)) === 0;
-
+            $isAdmin = to_bool($body['is_admin'] ?? false);
             $hash = password_hash($password, PASSWORD_DEFAULT);
             $user = create_user($pdo, [
                 'username' => $username,
                 'firstname' => $firstname,
                 'lastname' => $lastname,
-                'is_admin' => $noUsersExist, // first user becomes admin
+                'is_admin' => $isAdmin,
                 'password' => $hash,
             ]);
             json_response(['ok' => true, 'user' => $user]);

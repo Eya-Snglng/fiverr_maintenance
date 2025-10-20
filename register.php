@@ -48,6 +48,13 @@ if (isset($_SESSION['user'])) {
                   <label for="confirm" class="form-label">Confirm password</label>
                   <input type="password" class="form-control" id="confirm" required />
                 </div>
+                <div class="col-12 col-md-6">
+                  <label for="role" class="form-label">Role</label>
+                  <select id="role" class="form-select">
+                    <option value="user" selected>User</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
               </div>
               <button class="btn btn-primary w-100 mt-3" type="submit">Register</button>
             </form>
@@ -89,6 +96,7 @@ if (isset($_SESSION['user'])) {
       const lastname = document.getElementById('lastname').value.trim();
       const password = document.getElementById('password').value;
       const confirm = document.getElementById('confirm').value;
+      const role = document.getElementById('role').value;
 
       if (!username || !firstname || !lastname || !password || !confirm) {
         Swal.fire({icon: 'error', title: 'Validation', text: 'Input fields must not be empty.'});
@@ -115,7 +123,7 @@ if (isset($_SESSION['user'])) {
         const res = await fetch('api.php?action=register', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
-          body: JSON.stringify({username, firstname, lastname, password})
+          body: JSON.stringify({username, firstname, lastname, password, is_admin: role === 'admin'})
         });
         const data = await res.json();
         if (!data.ok) {
